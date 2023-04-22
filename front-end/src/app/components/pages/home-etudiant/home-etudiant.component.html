@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/" style="color:white;">Gestion Etudiant</a>
+  <li class="nav-item active">
+    <a class="navbar-brand"  (click)="logout()">Se Déconnecter <span class="sr-only">(current)</span></a>
+  </li>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor02">
+
+  </div>
+</nav>
+<div class="container" id="main-container" style="padding-top: 30px;">
+  <form class="form-inline my-2 my-lg-0">
+    <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
+    name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
+  </form>
+</div>
+<div class="container" id="main-container" style="padding-top: 30px;">
+  <h1>Affiché tous les absences</h1>
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID absence</th>
+          <th scope="col">Etudiant</th>
+          <th scope="col">Matiere</th>
+          <th scope="col">enseignant</th>
+          <th scope="col">Date</th>
+          <th scope="col">Heure</th>
+          <th scope="col">présence</th>
+          <th scope="col">Add justification</th>
+          <th scope="col">justifié</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let absence of absences">
+          <td>{{absence.id}}</td>
+          <td>{{absence.etudiant.nom}}  {{absence.etudiant.prenom}}</td>
+          <td>{{absence.matiere.nom}}</td>
+          <td>{{absence.enseignant.nom}}  {{absence.enseignant.prenom}}</td>
+          <td>{{absence.date}}</td>
+          <td>{{absence.heure}}</td>
+          <td>{{absence.justification}}</td>
+          <td *ngIf="absence.justification === 'A'"><button class="nav-link" (click)="onOpenModal( 'add')">Add Justification <span class="sr-only">(current)</span></button>   <button class="nav-link" [routerLink]="['/get-justification-by-absenceId', absence.id]">view Justification <span class="sr-only">(current)</span></button></td>
+          <td>{{absence.justifie}}</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>
+
+<div class="modal fade" id="addJustificationModal" tabindex="-1" role="dialog" aria-labelledby="addJustificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addJustificationModalLabel">Add justification</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddJustification(addForm)">
+          <div class="form-group">
+             <label for="dated">Date debut</label>
+             <input type="date" ngModel name="dated" class="form-control" id="dated" placeholder="Date debut" required>
+          </div>
+          <div class="form-group">
+            <label for="datef">Date fin</label>
+            <input type="date" ngModel name="datef" class="form-control" id="datef" placeholder="Date fin" required>
+         </div>
+         <div class="form-group">
+          <label for="description">Déscription</label>
+          <input type="text" ngModel name="description" class="form-control" id="description" placeholder="Déscription" required>
+       </div>
+          <div class="form-group" >
+             <label for="absence">Absence ID </label>
+             <td><input type="text" ngModel name="justification" class="form-control" id="justification"  required></td>
+          </div>
+          <div class="modal-footer">
+             <button type="button" id="add-etudiant-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+</div>
