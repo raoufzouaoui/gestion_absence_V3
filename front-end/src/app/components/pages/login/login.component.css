@@ -1,0 +1,71 @@
+body {
+  background-image: linear-gradient(
+    115deg, rgba(35, 161, 211, 0.8), rgba(238, 242, 234, 0.7) ), url( https://voila-le-travail.fr/wp-content/uploads/2022/09/Logiciel-conge%CC%81.png);
+      background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.titre{
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:white;
+}
+
+.details{
+  width: 40%;
+  border-radius: 4%;
+  width: 28rem;
+  margin-top: 10px;
+  border: none;
+  padding: 40px;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: hsla(205, 46%, 30%,1 );
+  background: linear-gradient(90deg, hsla(205, 46%, 30%,1 )0%,hsla(260, 29%, 36%,1 )100%);
+}
+
+label{
+  color: white;
+  font-weight: bold;
+}
+
+footer {
+  background-color: #1b70b6;
+  padding: 10px 0;
+  text-align: center;
+  color:white;
+  font-weight: bold;
+}
+
+
+.nav p{
+  color: white;
+  font-weight:bold ;
+  font-size: 200%;
+  position: relative;
+  padding: 20px 40px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.login-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: green;
+  /* Other styling properties */
+}

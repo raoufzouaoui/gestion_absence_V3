@@ -1,12 +1,15 @@
 export class Etudiant {
+  access_token!:string;
+  refresh_token!:string;
   id!:number;
   cin!:string;
-  nom!:string;
-  prenom!:string;
+  firstname!:string;
+  lastname!:string;
   email!:string;
-  date_naissance!:Date;
+  dateNaissance!:string;
   groupe!:string;
   password!:string;
   confirmPassword!:string;
   role!:string;
+  numero:number;
 }

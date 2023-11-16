@@ -9,9 +9,6 @@
         <module name="projet_web_version1-1" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="projet_web_version1-1" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

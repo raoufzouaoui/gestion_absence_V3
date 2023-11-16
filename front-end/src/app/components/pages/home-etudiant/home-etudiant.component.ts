@@ -8,6 +8,7 @@ import { Justification } from 'src/app/shared/models/Justification';
 import { ToastrService } from 'ngx-toastr';
 import { JustificationService } from 'src/app/services/justification.service';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-etudiant',
@@ -18,6 +19,7 @@ export class HomeEtudiantComponent {
   public absences:Absence[];
   public absence:Absence;
   public justifications:Justification[];
+  public email: any;
   public id: number;
   constructor(private absenceService:AbsenceService,private activatedroute:ActivatedRoute,private justificationService:JustificationService, private etudiantService:EtudiantService, private toastrService:ToastrService){ }
 
@@ -26,14 +28,24 @@ export class HomeEtudiantComponent {
   }
 
   ngOnInit() {
-     this.id=this.etudiantService.currentUser.id;
-    console.log(this.id);
-      this.absenceService.getAbsencesByIdEtudiant(this.id).subscribe(data => {
-        this.absences=data;
-      },
-      error => {
-        console.log("errorrrrrrrrrrrr");
-      });
+    this.email = this.etudiantService.currentUser.email;
+
+    this.etudiantService.getEtudiantByEmail(this.email)
+      .pipe(
+        switchMap(etudiantData => { //switchMap operator is used to switch to a new observable
+          this.id = etudiantData.id;
+          console.log(this.id);
+          return this.absenceService.getAbsencesByIdEtudiant(this.id);
+        })
+      )
+      .subscribe(
+        absencesData => {
+          this.absences = absencesData;
+        },
+        error => {
+          console.log("errorrrrrrrrrrrr");
+        }
+      );
   }
 
   public onAddJustification(addForm:NgForm):void {
@@ -60,7 +72,6 @@ export class HomeEtudiantComponent {
       )
     });
     })
-
   }
 
   public searchEtudiants(key: string): void {

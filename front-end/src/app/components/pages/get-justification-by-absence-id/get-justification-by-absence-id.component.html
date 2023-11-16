@@ -1,8 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/home-etudiant" style="color:white;">Gestion Etudiant</a>
-  <li class="nav-item active">
-    <a class="navbar-brand"  (click)="logout()">Se Déconnecter <span class="sr-only">(current)</span></a>
-  </li>
+<nav class="navbar navbar-expand-lg " style="background-color: #1b70b6;">
+  <a routerLink="/home-etudiant" ><img style="height: 80px;" src="http://www.enicarthage.rnu.tn/assets/images/logo.png" alt=""></a>
+  <a class="navbar-brand" routerLink="/home-etudiant" style="color:white;margin-left: 3%;"></a>
+    <a style="color:white;margin-left: 3%;" class="navbar-brand"  (click)="logout()">Se Déconnecter <span class="sr-only">(current)</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,53 +9,34 @@
 
   </div>
 </nav>
-<div class="container" id="main-container" style="padding-top: 30px;">
-  <form class="form-inline my-2 my-lg-0">
-    <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
-    name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
-  </form>
-</div>
-<!-- <div class="container" id="main-container">
-  <h1> justification :</h1>
-  <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Date debut</th>
-          <th scope="col">Date fin</th>
-          <th scope="col">description</th>
-          <th scope="col">absence</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let justification of justifications">
-          <td>{{justification.Date_deb}}</td>
-          <td>{{justification.date_fin}}</td>
-          <td>{{justification.description}}</td>
-          <td>{{justification.absence.id}}</td>
-        </tr>
-      </tbody>
 
-    </table>
-  </div>
-</div> -->
+<body>
+  <div class="container" id="main-container" style="padding-top: 30px;">
+    <form class="form-inline my-2 my-lg-0">
+      <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
+      name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
+    </form>
+    <div class="row">
+      <div *ngFor="let justification of justifications" class="col-md-6 col-xl-3">
+        <div class="card m-b-30">
+            <div class="card-body row">
+              <div class="col-6">
+                <p class="m-0"><b>Description: </b>{{justification.description}}</p>
+              </div>
 
-<div class="container" id="main-container" style="padding-top: 30px;">
-  <div class="row">
-    <div *ngFor="let justification of justifications" class="col-md-6 col-xl-3">
-       <div class="card m-b-30">
-          <div class="card-body row">
-             <div class="col-6">
-              <p class="m-0"><b>Description: </b>{{justification.description}}</p>
-             </div>
-
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><i class="fa fa-envelope float-right"></i><b>absence ID : </b>{{justification.absence.id}}</li>
+              <li class="list-group-item"><i class="fa fa-envelope float-right"></i><b>Date debut : </b>{{justification.Date_deb}}</li>
+              <li class="list-group-item"><i class="fa fa-phone float-right"></i><b>Date fin : </b>{{justification.date_fin}}</li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><i class="fa fa-envelope float-right"></i><b>absence ID : </b>{{justification.absence.id}}</li>
-             <li class="list-group-item"><i class="fa fa-envelope float-right"></i><b>Date debut : </b>{{justification.Date_deb}}</li>
-             <li class="list-group-item"><i class="fa fa-phone float-right"></i><b>Date fin : </b>{{justification.date_fin}}</li>
-          </ul>
-
-       </div>
+        </div>
+      </div>
     </div>
-  </div>
+    <footer>
+      <div class="copyright">
+        <p>Copyright © Raouf</p>
+      </div>
+    </footer>
+  </body>

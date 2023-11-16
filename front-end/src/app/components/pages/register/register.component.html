@@ -7,46 +7,77 @@
   <title>Gestion Absence</title>
 </head>
 <body>
+  <div class="nav">
+    <img src="http://www.enicarthage.rnu.tn/assets/images/logo.png" alt="enicarthage">
+    <p>Bienvenu dans gestion des absences</p>
+  </div>
   <div class="container">
-    <h1>Register User</h1>
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <div class="mb-3">
-          <label for="exampleInputEmail1">Nom</label>
-          <input type="text" formControlName="nom" class="form-control" id="exampleInputEmail1" aria-describedby="Nom">
+    <h1 class="titre">Register</h1>
+    <div class="details">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-left">
+          <label for="exampleInputEmail1">CIN</label>
+          <input type="text" formControlName="cin" class="form-control" id="exampleInputEmail1" aria-describedby="CIN">
         </div>
+          <div class="form-right">
+            <label for="exampleInputEmail1">First Name</label>
+            <input type="text" formControlName="firstname" class="form-control" id="exampleInputEmail1" aria-describedby="firstname">
+          </div>
+          <div class="form-left">
+            <label for="exampleInputEmail1">Last Name</label>
+            <input type="text" formControlName="lastname" class="form-control" id="exampleInputEmail1" aria-describedby="lastname">
+          </div>
+          <div class="form-right">
+            <label for="exampleInputEmail1">Email </label>
+            <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="form-left">
+            <label for="exampleInputEmail1">Date Naissance </label>
+            <input type="date" formControlName="dateNaissance" class="form-control" id="exampleInputEmail1" aria-describedby="date_naissance">
+          </div>
+          <div class="form-left">
+            <label for="groupe">Groupe</label>
+            <select formControlName="groupe" class="form-control" id="groupe">
+              <option [ngValue]="null">Select a groupe</option>
+              <option *ngFor="let groupe of Groupes" [ngValue]="groupe">{{ groupe }}</option>
+            </select>
+          </div>
+          <div class="form-left">
+            <label for="exampleInputEmail1">Numéro</label>
+            <input type="text" formControlName="numero" class="form-control" id="exampleInputEmail1" aria-describedby="numero">
+          </div>
+          <div class="form-right">
+            <label for="exampleInputPassword1">Mot de passe</label>
+            <input type="password" formControlName="password" class="form-control" id="password">
+          </div>
+          <div class="form-left">
+            <label for="exampleInputPassword1">Confirmez le mot de passe</label>
+            <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         <div class="mb-3">
-          <label for="exampleInputEmail1">Prenom</label>
-          <input type="text" formControlName="prenom" class="form-control" id="exampleInputEmail1" aria-describedby="Prenom">
+          Already a user? &nbsp;
+          <a routerLink="/login">
+            Login Here
+          </a>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1">Email </label>
-          <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1">Numéro</label>
-          <input type="text" formControlName="numero" class="form-control" id="exampleInputEmail1" aria-describedby="Prenom">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1">Mot de passe</label>
-          <input type="password" formControlName="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1">Confirmez le mot de passe</label>
-          <input type="password" formControlName="confirmPassword" class="form-control" id="exampleInputPassword1">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <div class="mb-3">
-        Already a user? &nbsp;
-        <a routerLink="/login">
-          Login Here
-        </a>
-      </div>
-      <div *ngIf="fc.confirmPassword.touched && fc.confirmPassword.errors?.notMatch" style="color: red;">
-        Les mots de passe et confirmer le mot de passe ne sont pas correct.    </div>
+        <div *ngIf="fc.confirmPassword.touched && fc.confirmPassword.errors?.notMatch" style="color: red;">
+          Les mots de passe et confirmer le mot de passe ne sont pas correct.    </div>
+          <div *ngIf="fc.email.touched && fc.email.errors?.email" style="color: red;">
+            Please enter a valid email address.
+          </div>
+
+
     </div>
 
+  </div>
 </body>
+<footer>
+  <div class="copyright">
+    <p>Copyright © Raouf</p>
+  </div>
+</footer>
 </html>
 
 

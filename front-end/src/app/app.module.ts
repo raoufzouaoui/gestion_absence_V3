@@ -1,6 +1,6 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './components/pages/register/register.component';
@@ -18,6 +18,7 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { GetJustificationByAbsenceIdComponent } from './components/pages/get-justification-by-absence-id/get-justification-by-absence-id.component';
 import { ValideJustificationComponent } from './components/pages/valide-justification/valide-justification.component';
+import {  HttpInterceptorService } from './auth/auth.interceptor';
 
 registerLocaleData(localeFr, 'fr-TN');
 
@@ -48,7 +49,11 @@ registerLocaleData(localeFr, 'fr-TN');
       newestOnTop:false
    }) ,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'fr-TN' }],
+  providers: [{ provide: LOCALE_ID, useValue: 'fr-TN' }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,188 +1,200 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/" style="color:white;">Gestion Etudiant</a>
+<nav class="navbar navbar-expand-lg " style="background-color: #1b70b6;">
+  <a routerLink="/" ><img style="height: 80px;" src="http://www.enicarthage.rnu.tn/assets/images/logo.png" alt=""></a>
+  <a class="navbar-brand" routerLink="/gestion-etudiant" style="color:white;margin-left: 3%;">Gestion Etudiant</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarColor02">
      <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-           <a class="nav-link" (click)="onOpenModal(null, 'add')">Add Etudiant <span class="sr-only">(current)</span></a>
+           <button class="btn btn-success tooltips" style="color:white; font-weight: bold;" (click)="onOpenModal(null, 'add')">Add Etudiant <span class="sr-only">(current)</span></button>
         </li>
      </ul>
      <form class="form-inline my-2 my-lg-0">
-        <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
-         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search etudiants..." required>
+        <!-- <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Chercher etudiant..." required> -->
      </form>
   </div>
 </nav>
-<div class="container" id="main-container">
-  <h1>Gestion des tous les etudiants :</h1>
-  <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Cin</th>
-          <th scope="col">Nom</th>
-          <th scope="col">Prenom</th>
-          <th scope="col">Email</th>
-          <th scope="col">Date Naissance</th>
-          <th scope="col">Groupe</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let etudiant of etudiants">
-          <td>{{etudiant.cin}}</td>
-          <td>{{etudiant.nom}}</td>
-          <td>{{etudiant.prenom}}</td>
-          <td>{{etudiant.email}}</td>
-          <td>{{etudiant.date_naissance}}</td>
-          <td>{{etudiant.groupe}}</td>
-          <td><a (click)="onOpenModal(etudiant, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil">Edit</i> </a>
-            <a (click)="onOpenModal(etudiant, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times">Delete</i></a></td>
-        </tr>
-      </tbody>
+<body>
+  <div class="container" id="main-container">
+    <h1>Gestion des tous les etudiants :</h1>
+    <div class="row">
+      <table class="table table-hover">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col">Cin</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date Naissance</th>
+            <th scope="col">Groupe</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let etudiant of etudiants">
+            <td>{{etudiant.cin}}</td>
+            <td>{{etudiant.firstname}}</td>
+            <td>{{etudiant.lastname}}</td>
+            <td>{{etudiant.email}}</td>
+            <td>{{etudiant.dateNaissance}}</td>
+            <td>{{etudiant.groupe}}</td>
+            <td><a (click)="onOpenModal(etudiant, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil">Modifier</i> </a>
+              <a (click)="onOpenModal(etudiant, 'delete')" class="btn btn-danger tooltips" data-placement="top" data-original-title="Delete"><i class="fa fa-times">Supprimer</i></a></td>
+          </tr>
+        </tbody>
 
-    </table>
-  </div>
-</div>
-
-<!-- Add Etudiant Modal -->
-<div class="modal fade" id="addEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="addEtudiantModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-       <div class="modal-header">
-          <h5 class="modal-title" id="addEtudiantModalLabel">Add Etudiant</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-          </button>
-       </div>
-       <div class="modal-body">
-          <form #addForm="ngForm" (ngSubmit)="onAddEtudiant(addForm)">
-          <div class="form-group">
-             <label for="cin">Cin</label>
-             <input type="text" ngModel name="cin" class="form-control" id="cin" placeholder="Cin" required>
-          </div>
-          <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" ngModel name="nom" class="form-control" id="nom" placeholder="Nom" required>
-         </div>
-         <div class="form-group">
-          <label for="prenom">Prenom</label>
-          <input type="text" ngModel name="prenom" class="form-control" id="prenom" placeholder="Prenom" required>
-       </div>
-          <div class="form-group">
-             <label for="email">Email </label>
-             <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="text" ngModel name="gropasswordupe" class="form-control" id="password" placeholder="Mot de passe" required>
-         </div>
-         <div class="form-group">
-          <label for="confirmpassword">Confirm Mot de passe</label>
-          <input type="text" ngModel name="confirmpassword" class="form-control" id="confirmpassword" placeholder="Confirm Mot de passe" required>
-       </div>
-          <div class="form-group">
-             <label for="date_naissance">Date Naissance</label>
-             <input type="date" ngModel name="date_naissance" class="form-control" id="date_naissance" placeholder="Date Naissance" required>
-          </div>
-          <div class="form-group">
-             <label for="groupe">Groupe</label>
-             <input type="text" ngModel name="groupe" class="form-control" id="groupe" placeholder="Groupe" required>
-          </div>
-          <div class="modal-footer">
-             <button type="button" id="add-etudiant-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
-          </div>
-          </form>
-       </div>
+      </table>
     </div>
   </div>
-</div>
-<!-- Edit Modal -->
-<div class="modal fade" id="updateEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="updateEtudiantModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
+
+  <!-- Add Etudiant Modal -->
+  <!-- <div class="modal fade" id="addEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="addEtudiantModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title" id="updateEtudiantModalLabel">Edit Etudiant {{editEtudiant?.nom}}</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
+            <h5 class="modal-title" id="addEtudiantModalLabel">Add Etudiant</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
-           <form #editForm="ngForm">
-              <div class="form-group">
-                  <label for="cin">Cin</label>
-                  <input type="text" ngModel="{{editEtudiant?.cin}}" name="cin" class="form-control" id="cin" aria-describedby="emailHelp" placeholder="Cin">
-              </div>
-              <div class="form-group">
-                  <label for="nom">Nom</label>
-                  <input type="text" ngModel="{{editEtudiant?.nom}}" name="nom" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Nom">
-              </div>
-              <div class="form-group">
-                 <label for="prenom">Prenom</label>
-                 <input type="text" ngModel="{{editEtudiant?.prenom}}" name="prenom" class="form-control" id="prenom" aria-describedby="emailHelp" placeholder="Prenom">
-              </div>
-              <div class="form-group">
-                 <label for="email">Email </label>
-                 <input type="email" ngModel="{{editEtudiant?.email}}" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
-              </div>
-              <div class="form-group">
-                 <label for="date_naissance">Date Naissance</label>
-                 <input type="date" [ngModel]="editEtudiant?.date_naissance" name="date_naissance" class="form-control" id="date_naissance" aria-describedby="emailHelp" placeholder="Date Naissance">
-              </div>
-              <div class="form-group">
-                 <label for="groupe">Groupe</label>
-                 <input type="text" ngModel="{{editEtudiant?.groupe}}" name="groupe" class="form-control" id="groupe"  aria-describedby="emailHelp" placeholder="Groupe">
-              </div>
-              <div class="form-group">
-                <label for="password">Mot de passe </label>
-                <input type="text" ngModel="{{editEtudiant?.password}}" name="password" class="form-control" id="password"  aria-describedby="emailHelp" placeholder="Mot de passe">
-             </div>
-             <div class="form-group">
-              <label for="confirmPassword">Confirmé Mot de passe</label>
-              <input type="text" ngModel="{{editEtudiant?.confirmPassword}}" name="confirmPassword" class="form-control" id="confirmPassword"  aria-describedby="emailHelp" placeholder="Confirmé Mot de passe">
-           </div>
-           <div class="form-group">
-            <label for="role">Role</label>
-            <input type="text" ngModel="{{editEtudiant?.role}}" name="role" class="form-control" id="role"  aria-describedby="emailHelp" placeholder="Role">
-         </div>
-              <div class="modal-footer">
-                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                 <button (click)="onUpdateEtudiant(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
-              </div>
-           </form>
+            <form #addForm="ngForm" (ngSubmit)="onAddEtudiant(addForm)">
+            <div class="form-group">
+              <label  for="cin"><b>Cin</b></label>
+              <input type="text" ngModel name="cin" class="form-control" id="cin" placeholder="Cin" required>
+            </div>
+            <div class="form-group">
+              <label for="nom"><b>Nom</b></label>
+              <input type="text" ngModel name="nom" class="form-control" id="nom" placeholder="Nom" required>
+          </div>
+          <div class="form-group">
+            <label for="prenom"><b>Prenom</b></label>
+            <input type="text" ngModel name="prenom" class="form-control" id="prenom" placeholder="Prenom" required>
         </div>
-     </div>
+            <div class="form-group">
+              <label for="email"><b>Email</b> </label>
+              <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <label for="password"><b>Mot de passe</b></label>
+              <input type="text" ngModel name="password" class="form-control" id="password" placeholder="Mot de passe" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword"><b>Confirm Mot de passe</b></label>
+            <input type="text" ngModel name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Mot de passe" required>
+        </div>
+            <div class="form-group">
+              <label for="date_naissance"><b>Date Naissance</b></label>
+              <input type="date" ngModel name="date_naissance" class="form-control" id="date_naissance" placeholder="Date Naissance" required>
+            </div>
+            <div class="form-group">
+              <label for="groupe"><b>Groupe</b></label>
+              <input type="text" ngModel name="groupe" class="form-control" id="groupe" placeholder="Groupe" required>
+            </div>
+            <div class="form-group">
+              <label for="role"><b>Role</b></label>
+              <input type="text" ngModel name="role" class="form-control" id="role"  aria-describedby="emailHelp" placeholder="Role">
+          </div>
+            <div class="modal-footer">
+              <button type="button" id="add-etudiant-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Save changes</button>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="updateEtudiantModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateEtudiantModalLabel">Edit Etudiant {{editEtudiant?.firstname}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form #editForm="ngForm">
+                <div class="form-group">
+                  <label  for="cin"><b>Cin</b></label>
+                    <input type="text" ngModel="{{editEtudiant?.cin}}" name="cin" class="form-control" id="cin" aria-describedby="emailHelp" placeholder="Cin">
+                </div>
+                <div class="form-group">
+                  <label for="nom"><b>Nom</b></label>
+                    <input type="text" ngModel="{{editEtudiant?.firstname}}" name="nom" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Nom">
+                </div>
+                <div class="form-group">
+                  <label for="prenom"><b>Prenom</b></label>
+                  <input type="text" ngModel="{{editEtudiant?.lastname}}" name="prenom" class="form-control" id="prenom" aria-describedby="emailHelp" placeholder="Prenom">
+                </div>
+                <div class="form-group">
+                  <label for="email"><b>Email</b> </label>
+                  <input type="email" ngModel="{{editEtudiant?.email}}" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <label for="date_naissance"><b>Date Naissance</b></label>
+                  <input type="date" [ngModel]="editEtudiant?.dateNaissance" name="dateNaissance" class="form-control" id="dateNaissance" aria-describedby="emailHelp" placeholder="Date Naissance">
+                </div>
+                <div class="form-group">
+                  <label for="groupe"><b>Groupe</b></label>
+                  <input type="text" ngModel="{{editEtudiant?.groupe}}" name="groupe" class="form-control" id="groupe"  aria-describedby="emailHelp" placeholder="Groupe">
+                </div>
+                <div class="form-group">
+                  <label for="password"><b>Mot de passe</b></label>
+                  <input type="text" ngModel="{{editEtudiant?.password}}" name="password" class="form-control" id="password"  aria-describedby="emailHelp" placeholder="Mot de passe">
+              </div>
+              <div class="form-group">
+                <label for="confirmpassword"><b>Confirm Mot de passe</b></label>
+                <input type="text" ngModel="{{editEtudiant?.confirmPassword}}" name="confirmPassword" class="form-control" id="confirmPassword"  aria-describedby="emailHelp" placeholder="Confirmé Mot de passe">
+            </div>
+            <div class="form-group">
+              <label for="role"><b>Role</b></label>
+              <input type="hidden" ngModel="{{editEtudiant?.role}}" name="role" class="form-control" id="role"  aria-describedby="emailHelp" placeholder="Role">
+          </div>
+                <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <!-- <button (click)="onUpdateEtudiant(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button> -->
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Delete Modal -->
-<div class="modal fade" id="deleteEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
-        <div class="modal-header">
-           <h5 class="modal-title" id="deleteModelLabel">Delete Etudiant</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-        <div class="modal-body">
-           <p>Are you sure you want to delete etudiant {{deleteEtudiant?.nom}}?</p>
-           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <button (click)="onDeleteEtudiant(deleteEtudiant?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
-           </div>
-        </div>
-     </div>
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteEtudiantModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Delete Etudiant</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete etudiant {{deleteEtudiant?.firstname}}?</p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <!-- <button (click)="onDeleteEtudiant(deleteEtudiant?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button> -->
+            </div>
+          </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Notification for no etudiants -->
-<div *ngIf="etudiants?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-<div class="alert alert-info" role="alert">
-  <h4 class="alert-heading">NO EtudiantS!</h4>
-  <p>No Etudiants were found.</p>
-</div>
-</div>
+  <!-- Notification for no etudiants -->
+  <div *ngIf="etudiants?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">NO EtudiantS!</h4>
+    <p>No Etudiants were found.</p>
+  </div>
+  </div>
+  <footer>
+    <div class="copyright">
+      <p>Copyright © Raouf</p>
+    </div>
+  </footer>
+</body>

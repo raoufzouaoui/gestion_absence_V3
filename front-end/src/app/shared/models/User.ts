@@ -1,7 +1,9 @@
 export class User {
+  access_token!:string;
+  refresh_token!:string;
   id!:number;
-  nom!:string;
-  prenom!:string;
+  firstname!:string;
+  lastname!:string;
   email!:string;
   numero!:string;
   password!:string;

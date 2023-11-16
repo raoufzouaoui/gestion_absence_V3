@@ -1,9 +1,13 @@
 export interface IUserRegister
 {
-  nom:string;
-  prenom:string;
+  cin:string;
+  firstname:string;
+  lastname:string;
   email:string;
-  numero:string;
+  dateNaissance:string;
+  groupe:string;
   password:string;
   confirmPassword:string;
+  role:string;
+  numero:number;
 }

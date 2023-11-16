@@ -1,104 +1,112 @@
 <app-navbar></app-navbar>
-<div class="container" id="main-container" style="padding-top: 30px;">
-  <!-- <form class="form-inline my-2 my-lg-0">
-    <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
-    name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
-  </form> -->
-</div>
-<div class="container" id="main-container" style="padding-top: 30px;">
-  <h1>Affiché tous les justifications :</h1>
-  <div class="row">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">ID justification</th>
-          <th scope="col">Date debut</th>
-          <th scope="col">Date fin</th>
-          <th scope="col">Justification</th>
-          <th scope="col">             </th>
-          <th scope="col">Absence Id</th>
-          <th scope="col">Absence Date</th>
-          <th scope="col">Absence Heure</th>
-          <th scope="col">Etudiant nom prenom</th>
-          <th scope="col">Groupe</th>
-          <th scope="col">Matiere</th>
-          <th scope="col">Présence</th>
-          <th scope="col">Justifié</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let justification of justifications">
-          <td>{{justification.id}}</td>
-          <td>{{justification.Date_deb}}</td>
-          <td>{{justification.date_fin}}</td>
-          <td>{{justification.description}}</td>
-          <td>                           </td>
-          <td>{{justification.absence.id}}</td>
-          <td>{{justification.absence.date}}</td>
-          <td>{{justification.absence.heure}}</td>
-          <td>{{justification.absence.etudiant.nom}}  {{justification.absence.etudiant.prenom}}</td>
-          <td>{{justification.absence.etudiant.groupe}}</td>
-          <td>{{justification.absence.matiere.nom}}</td>
-          <td>{{justification.absence.justification}}</td>
-          <td>{{justification.absence.justifie}}</td>
-          <td><a *ngIf="justification.absence.justification==='A'" (click)="onOpenModal(justification, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil">Edit</i> </a></td>
-        </tr>
-      </tbody>
+<body>
 
-    </table>
+  <div class="container" id="main-container" style="padding-top: 30px;">
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
+      name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
+    </form> -->
   </div>
-</div>
+  <div class="container" id="main-container" style="padding-top: 30px;">
+    <h1>Validé les justifications :</h1>
+    <div class="row">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">ID justification</th>
+            <th scope="col">Date debut</th>
+            <th scope="col">Date fin</th>
+            <th scope="col">Justification</th>
+            <th scope="col">             </th>
+            <th scope="col">Absence Id</th>
+            <th scope="col">Absence Date</th>
+            <th scope="col">Absence Heure</th>
+            <th scope="col">Etudiant nom prenom</th>
+            <th scope="col">Groupe</th>
+            <th scope="col">Matiere</th>
+            <th scope="col">Présence</th>
+            <th scope="col">Justifié</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let justification of justifications">
+            <td>{{justification.id}}</td>
+            <td>{{justification.Date_deb}}</td>
+            <td>{{justification.date_fin}}</td>
+            <td>{{justification.description}}</td>
+            <td>                           </td>
+            <td>{{justification.absence.id}}</td>
+            <td>{{justification.absence.date}}</td>
+            <td>{{justification.absence.heure}}</td>
+            <td>{{justification.absence.etudiant.firstname}}  {{justification.absence.etudiant.lastname}}</td>
+            <td>{{justification.absence.etudiant.groupe}}</td>
+            <td>{{justification.absence.matiere.nom}}</td>
+            <td>{{justification.absence.justification}}</td>
+            <td>{{justification.absence.justifie}}</td>
+            <td><a *ngIf="justification.absence.justification==='A'" (click)="onOpenModal(justification, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil">Edit</i> </a></td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
 
 
-<!-- Edit Modal -->
-<div class="modal fade" id="updateAbsenceModal" tabindex="-1" role="dialog" aria-labelledby="updateAbsenceModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
-        <div class="modal-header">
-           <h5 class="modal-title" id="updateAbsenceModalLabel">Edit Etudiant {{editAbsence?.id}}</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
-        <div class="modal-body">
-           <form *ngIf="editAbsence" #editForm="ngForm">
-            <div  class="form-group">
-              <input type="hidden" [(ngModel)]="editAbsence.id" name="id" class="form-control" id="id" aria-describedby="emailHelp" placeholder="id">
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateAbsenceModal" tabindex="-1" role="dialog" aria-labelledby="updateAbsenceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateAbsenceModalLabel">Edit Absence {{editAbsence?.id}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+            <form *ngIf="editAbsence" #editForm="ngForm">
               <div  class="form-group">
-                  <label for="heure">heure</label>
-                  <input type="text" [(ngModel)]="editAbsence.heure" name="heure" class="form-control" id="heure" aria-describedby="emailHelp" placeholder="Heure">
+                <input type="hidden" [(ngModel)]="editAbsence.id" name="id" class="form-control" id="id" aria-describedby="emailHelp" placeholder="id">
+            </div>
+                <div  class="form-group">
+                    <label for="heure">heure</label>
+                    <input type="text" [(ngModel)]="editAbsence.heure" name="heure" class="form-control" id="heure" aria-describedby="emailHelp" placeholder="Heure">
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="text" [(ngModel)]="editAbsence.date" name="date" class="form-control" id="date" aria-describedby="emailHelp" placeholder="Date">
+                </div>
+                <div class="form-group">
+                  <label for="etudiant">etudiant</label>
+                  <input type="text" [(ngModel)]="editAbsence.etudiant" name="etudiant" class="form-control" id="etudiant" aria-describedby="emailHelp" placeholder="Prenom">
+                </div>
+                <div class="form-group">
+                  <label for="matiere">matiere </label>
+                  <input type="text" [(ngModel)]="editAbsence.matiere" name="matiere" class="form-control" id="matiere" aria-describedby="emailHelp" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <label for="justification">justification</label>
+                  <input type="text" [(ngModel)]="editAbsence.justification" name="justification" class="form-control" id="justification" aria-describedby="emailHelp" placeholder="Date Naissance">
+                </div>
+                <div class="form-group">
+                  <label for="justifie">justifie</label>
+                  <input type="text" [(ngModel)]="editAbsence.justifie" name="justifie" class="form-control" id="justifie"  aria-describedby="emailHelp" placeholder="Groupe">
+                </div>
+                <div class="form-group">
+                  <label for="enseignant">enseignant </label>
+                  <input type="text" [(ngModel)]="editAbsence.enseignant" name="enseignant" class="form-control" id="enseignant"  aria-describedby="emailHelp" placeholder="Mot de passe">
               </div>
-              <div class="form-group">
-                  <label for="date">Date</label>
-                  <input type="text" [(ngModel)]="editAbsence.date" name="date" class="form-control" id="date" aria-describedby="emailHelp" placeholder="Date">
-              </div>
-              <div class="form-group">
-                 <label for="etudiant">etudiant</label>
-                 <input type="text" [(ngModel)]="editAbsence.etudiant" name="etudiant" class="form-control" id="etudiant" aria-describedby="emailHelp" placeholder="Prenom">
-              </div>
-              <div class="form-group">
-                 <label for="matiere">matiere </label>
-                 <input type="text" [(ngModel)]="editAbsence.matiere" name="matiere" class="form-control" id="matiere" aria-describedby="emailHelp" placeholder="Email">
-              </div>
-              <div class="form-group">
-                 <label for="justification">justification</label>
-                 <input type="text" [(ngModel)]="editAbsence.justification" name="justification" class="form-control" id="justification" aria-describedby="emailHelp" placeholder="Date Naissance">
-              </div>
-              <div class="form-group">
-                 <label for="justifie">justifie</label>
-                 <input type="text" [(ngModel)]="editAbsence.justifie" name="justifie" class="form-control" id="justifie"  aria-describedby="emailHelp" placeholder="Groupe">
-              </div>
-              <div class="form-group">
-                <label for="enseignant">enseignant </label>
-                <input type="text" [(ngModel)]="editAbsence.enseignant" name="enseignant" class="form-control" id="enseignant"  aria-describedby="emailHelp" placeholder="Mot de passe">
-             </div>
-              <div class="modal-footer">
-                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                 <button (click)="onUpdateAbsence(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
-              </div>
-           </form>
-        </div>
-     </div>
+                <div class="modal-footer">
+                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                  <button (click)="onUpdateAbsence(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Save changes</button>
+                </div>
+            </form>
+          </div>
+      </div>
+    </div>
   </div>
-</div>
+  <footer>
+    <div class="copyright">
+      <p>Copyright © Raouf</p>
+    </div>
+  </footer>
+  </body>

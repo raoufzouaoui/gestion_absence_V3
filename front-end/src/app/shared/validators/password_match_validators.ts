@@ -6,16 +6,17 @@ export const PasswordsMatchValidator = (passwordControlName: string,
         const passwordControl =  form.get(passwordControlName);
         const confirmPasswordControl =  form.get(confirmPasswordControlName);
 
-        if(!passwordControl || !confirmPasswordControl) return;
+        if(!passwordControl || !confirmPasswordControl) return null;
 
         if(passwordControl.value !== confirmPasswordControl.value){
           return confirmPasswordControl.setErrors({notMatch: true});
         }else{
           const errors = confirmPasswordControl.errors;
-          if(!errors) return;
+          if(!errors) return null;
 
           delete errors.notMatch;
           confirmPasswordControl.setErrors(errors);
+          return null;
         }
       }
       return validator;

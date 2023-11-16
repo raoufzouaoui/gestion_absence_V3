@@ -2,12 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-// import { USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
+import { BehaviorSubject, Observable, first, of, tap } from 'rxjs';
 import { IUserLogin } from '../shared/interfaces/IUserLogin';
-import { IUserRegister } from '../shared/interfaces/IUserRegister';
 import { User } from '../shared/models/User';
-import { GET_ENSEIGNANT_BY_EMAIL,  USER_LOGIN_URL, USER_REGISTER_URL } from '../shared/constants/urls';
+import { GET_USER_BY_EMAIL,  ENSEIGNANT_LOGIN_URL, GET_ENSEIGNANT_BY_Email  } from '../shared/constants/urls';
 
 const USER_KEY='User';
 
@@ -15,30 +13,41 @@ const USER_KEY='User';
   providedIn: 'root'
 })
 export class UserService {
-
-  private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage()); //BehaviorSubject has read and write mode inside it but we dont want anything outside of the user service be able to write anything inside the user subject
+  private token: string;
+  private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage()); //BehaviorSubject has read and write mode inside
+  //it but we dont want anything outside of the user service be able to write anything inside the user subject
   // so we just need to expose the user observable that is in fact user subject that is converted into an observable so
   public userObservable:Observable<User> | undefined ; // is the read only version of the user subject
+
   constructor(private http:HttpClient,private toastrService:ToastrService,private router:Router) {
     this.userObservable = this.userSubject.asObservable();
   }
+
 
   public get currentUser():User{
     return this.userSubject.value;
   }
 
-  public getEnseignantByEmail(EnseignantEmailUser: any): Observable<User> {
-    return this.http.get<User>(GET_ENSEIGNANT_BY_EMAIL+EnseignantEmailUser);
+  public getUserByEmail(EmailUser: any): Observable<User> {
+    return this.http.get<User>(GET_USER_BY_EMAIL+EmailUser);
+  }
+
+  public getEnseignantByEmail(enseignantEmail:string): Observable<User> {
+    return this.http.get<User>(GET_ENSEIGNANT_BY_Email+enseignantEmail);
   }
 
   login(userLogin:IUserLogin):Observable<User>{
-        return this.http.post<User>(USER_LOGIN_URL,userLogin).pipe(
+        return this.http.post<User>(ENSEIGNANT_LOGIN_URL,userLogin).pipe(
           tap({
             next: (user) => {
+              console.log(user);
+              this.token = user.access_token;
+              console.log(this.token);
+              this.userSubject.next(user);
+               console.log(this.currentUser);
                this.setUserToLocalStorage(user);
-               this.userSubject.next(user);
                this.toastrService.success(
-                `Welcome  ${user.nom}`,
+                `Welcome  ${user.firstname}`,
                 'Login Successful'
               )
             },
@@ -50,24 +59,8 @@ export class UserService {
         )
     }
 
-    register(userRegiser:IUserRegister): Observable<User>{
-      console.log(userRegiser);
-      return this.http.post<User>(USER_REGISTER_URL, userRegiser).pipe(
-        tap({
-          next: (user) => {
-            this.setUserToLocalStorage(user);
-            this.userSubject.next(user);
-            this.toastrService.success(
-              `Welcome ${user.nom}`,
-              'Register Successful'
-            )
-          },
-          error: (errorResponse) => {
-            this.toastrService.error(errorResponse.error,
-              'Register Failed')
-          }
-        })
-      )
+    getToken(): string {
+      return this.token;
     }
 
     logout(){
@@ -80,7 +73,7 @@ export class UserService {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
     }
 
-    private getUserFromLocalStorage():User{
+     getUserFromLocalStorage():User{
         const userJson = localStorage.getItem(USER_KEY);
         if(userJson) return JSON.parse(userJson) as User;
         return new User();

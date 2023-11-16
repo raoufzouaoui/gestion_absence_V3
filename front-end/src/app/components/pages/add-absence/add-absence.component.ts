@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { th } from 'date-fns/locale';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, map } from 'rxjs';
 import { AbsenceService } from 'src/app/services/absence.service';
@@ -19,7 +20,7 @@ export class AddAbsenceComponent {
   public students: Etudiant[] ;
   public absences: Absence[] = [];
   public matiere : Matiere;
-  public enseignant : User;
+  public enseignant :any;
   constructor(private http: HttpClient,private absenceService:AbsenceService,private toastrService:ToastrService,private etudiantService:EtudiantService,private userService:UserService) {}
 
   ngOnInit() {
@@ -47,41 +48,54 @@ export class AddAbsenceComponent {
       // console.log(this.matiere);
 
       // console.log(this.students);
-      var justification="";
-      var justifie="";
+
       for(let i=0;i<this.students.length;i++){
         const studentId=this.students[i].id;
         const control = addForm.form.get(`justification_${studentId}`);
+        let justification = '';
+        let justifie="";
         console.log(`id: ${studentId}`);
-        // console.log(this.students[i]);
         if (control !== null) {
           justification=control.value;
         }
+        console.log(justification)
         if(justification==="A"){
-          justifie="Non";
+          justifie="Non Justifié";
         }
-         this.enseignant = this.userService.currentUser;
-        console.log(this.enseignant);
-        const absence  = new Absence(date, heure, this.matiere,this.students[i],justification,justifie,this.enseignant);
-        // console.log(absence);
-        this.absences.push(absence);
+        this.userService.getUserByEmail(this.userService.currentUser.email).subscribe(data=>{
+          this.enseignant =data;
+          console.log(this.enseignant);
+          const absence  = new Absence(date, heure, this.matiere,this.students[i],justification,justifie,this.matiere.enseignant[0]);
+          console.log(absence);
+          this.absences.push(absence);
+          console.log(this.absences);
+          if (i === this.students.length - 1) {
+            // This is the last iteration
+            this.saveAbsences();
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.log('Error fetching enseignant:', error);
+        })
       }
-      this.absenceService.addAbsence(this.absences).subscribe(data => {
-        console.log(data);
-        this.toastrService.success(
-          `absences valide!`,
-        )
-      },
-      (error: HttpErrorResponse) => {
-        this.toastrService.success(
-          error.message,
-        )
-      });
-
-    });
+    },
+    (error: HttpErrorResponse) => {
+      console.log('Error fetching matiere:', error);
+    }
+  );
   }
 
-
+  private saveAbsences(): void {
+    this.absenceService.addAbsence(this.absences).subscribe(
+      (data: Absence[]) => {
+        this.toastrService.success('Absences saved successfully!');
+      },
+      (error: HttpErrorResponse) => {
+        this.toastrService.error(`Error: ${error.message}`);
+      }
+    );
+    this.absences=[];
+  }
 
 public searchEtudiants(key: string): void {
   console.log(key);
@@ -103,7 +117,7 @@ public searchEtudiants(key: string): void {
     error => {
       console.log("errorrrrrrrrrrrr");
     })
-  }
+   }
 }
 
 

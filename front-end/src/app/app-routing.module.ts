@@ -4,7 +4,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { LoginComponent } from './components/pages/login/login.component';
 import { RegisterComponent } from './components/pages/register/register.component';
 import { GestionEtudiantComponent } from './components/pages/gestion-etudiant/gestion-etudiant.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './auth/guards/auth.guard';
 import { AddAbsenceComponent } from './components/pages/add-absence/add-absence.component';
 import { GetAllAbsenceComponent } from './components/pages/get-all-absence/get-all-absence.component';
 import { HomeEtudiantComponent } from './components/pages/home-etudiant/home-etudiant.component';

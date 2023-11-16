@@ -30,41 +30,36 @@ export class LoginComponent {
     console.log(this.loginForm.value);
     this.isSubmitted = true;
     if (this.loginForm.invalid) return;
-
-    this.userService.getEnseignantByEmail(this.fc.email.value).subscribe(data => {
+    this.userService.getUserByEmail(this.fc.email.value).subscribe(data => {
       console.log(data);
-      if (data) { // data is not null
-        if (data.role === "enseignant") {
-          console.log(data);
-          this.userService.login({email: this.fc.email.value, password: this.fc.password.value}).subscribe(() => {
-            this.router.navigate(['/']); // navigate to enseignant URL
-          });
-        }
-      }else{
-        this.etudiantService.login({email: this.fc.email.value, password: this.fc.password.value}).subscribe(() => {
-          this.router.navigate(['/home-etudiant']);// navigate to etudiant URL
-       });
-      }
+      if (data.role === "ENSEIGNANT") {
+        console.log("data");
+                this.userService.login({
+                  email: this.fc.email.value,
+                  password: this.fc.password.value,
+                }).subscribe(() => {
+                  this.router.navigate(['/']); // navigate to enseignant URL
+                  console.log("xxxxxxxxxxxxxxxx")
+                });
+              }else{
+                this.etudiantService.login({
+                  email: this.fc.email.value,
+                  password: this.fc.password.value,
+                }).subscribe(() => {
+                  console.log("hhhhhhhhh")
+                  this.router.navigate(['/home-etudiant']); // navigate to etudiant URL
+                });
+              }
     }, error => {
-      // handle error
-      console.log("error");
-      this.etudiantService.login({email: this.fc.email.value, password: this.fc.password.value}).subscribe(() => {
-        this.router.navigate(['/home-etudiant']);// navigate to etudiant URL
-      });
+      alert("login failed")
+      console.log(error)
     });
   }
 
 
-      // this.userService.getEnseignantByEmail(this.fc.email.value).subscribe(data => {
-      //   if(data.role!="etudiant")
-      //     this.router.navigate(['/']);
-      //   else{
-      //     this.etudiantService.login({email:this.fc.email.value,password:this.fc.password.value}).subscribe(() => {
-      //         this.router.navigate(['/home-etudiant']);
-      //   })
-      //   }
-      // })
-
-
-
 }
+
+
+
+
+

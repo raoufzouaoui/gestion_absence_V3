@@ -1,8 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/" style="color:white;">Gestion Etudiant</a>
-  <li class="nav-item active">
-    <a class="navbar-brand"  (click)="logout()">Se Déconnecter <span class="sr-only">(current)</span></a>
-  </li>
+<nav class="navbar navbar-expand-lg " style="background-color: #1b70b6;">
+  <a routerLink="/home-etudiant" ><img style="height: 80px;" src="http://www.enicarthage.rnu.tn/assets/images/logo.png" alt=""></a>
+  <a class="navbar-brand" routerLink="/home-etudiant" style="color:white;margin-left: 3%;"></a>
+    <a style="color:white;margin-left: 3%;" class="navbar-brand"  (click)="logout()">Se Déconnecter <span class="sr-only">(current)</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,17 +9,18 @@
 
   </div>
 </nav>
+<body>
 <div class="container" id="main-container" style="padding-top: 30px;">
   <form class="form-inline my-2 my-lg-0">
     <input type="search" (ngModelChange)="searchEtudiants(key.value)" #key="ngModel" ngModel
-    name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search " required>
+    name="key" id="searchName" class="form-control mr-sm-2" placeholder="Chercher " required>
   </form>
 </div>
 <div class="container" id="main-container" style="padding-top: 30px;">
   <h1>Affiché tous les absences</h1>
   <div class="row">
     <table class="table table-hover">
-      <thead>
+      <thead class="thead-dark">
         <tr>
           <th scope="col">ID absence</th>
           <th scope="col">Etudiant</th>
@@ -36,9 +36,9 @@
       <tbody>
         <tr *ngFor="let absence of absences">
           <td>{{absence.id}}</td>
-          <td>{{absence.etudiant.nom}}  {{absence.etudiant.prenom}}</td>
+          <td>{{absence.etudiant.firstname}}  {{absence.etudiant.lastname}}</td>
           <td>{{absence.matiere.nom}}</td>
-          <td>{{absence.enseignant.nom}}  {{absence.enseignant.prenom}}</td>
+          <td>{{absence.enseignant.firstname}}  {{absence.enseignant.lastname}}</td>
           <td>{{absence.date}}</td>
           <td>{{absence.heure}}</td>
           <td>{{absence.justification}}</td>
@@ -87,3 +87,10 @@
     </div>
   </div>
 </div>
+<footer>
+  <div class="copyright">
+    <p>Copyright © Raouf</p>
+  </div>
+</footer>
+</body>
+

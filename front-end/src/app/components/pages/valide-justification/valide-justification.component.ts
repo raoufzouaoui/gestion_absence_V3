@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { switchMap } from 'rxjs/operators';
 import { AbsenceService } from 'src/app/services/absence.service';
 import { JustificationService } from 'src/app/services/justification.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,10 +22,23 @@ export class ValideJustificationComponent {
     private justificationService:JustificationService) {}
 
   ngOnInit() {
-    const id = this.userService.currentUser.id;
-    this.justificationService.getJustificationByIdEnseignant(id).subscribe(data => {
-      this.justifications = data;
-    })
+    const email = this.userService.currentUser.email;
+    this.userService.getEnseignantByEmail(email)
+    .pipe(
+      switchMap(enseignantData => {
+        console.log(enseignantData.id)
+        return this.justificationService.getJustificationByIdEnseignant(enseignantData.id);
+      })
+    )
+    .subscribe(
+      justificationsData => {
+        this.justifications = justificationsData;
+        console.log(justificationsData)
+      },
+      error => {
+        console.error("An error occurred while fetching justifications:", error);
+      }
+    );
   }
 
 
@@ -34,13 +48,21 @@ export class ValideJustificationComponent {
     this.absenceService.updateAbsence(absence).subscribe(
       data => {
         console.log(absence);
-        const id = this.userService.currentUser.id;
-        this.justificationService.getJustificationByIdEnseignant(id).subscribe(
-          data => {
-            this.justifications = data;
+        const email = this.userService.currentUser.email;
+        this.userService.getEnseignantByEmail(email)
+        .pipe(
+          switchMap(enseignantData => {
+            console.log(enseignantData.id)
+            return this.justificationService.getJustificationByIdEnseignant(enseignantData.id);
+          })
+        )
+        .subscribe(
+          justificationsData => {
+            this.justifications = justificationsData;
+            console.log(justificationsData)
           },
           error => {
-            console.log("errorrrrrrrrrrrr");
+            console.error("An error occurred while fetching justifications:", error);
           }
         );
       },

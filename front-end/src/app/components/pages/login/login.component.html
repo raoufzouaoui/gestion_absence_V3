@@ -6,9 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestion Absence</title>
 </head>
+<nav>
+</nav>
 <body>
+  <div class="nav">
+    <img src="http://www.enicarthage.rnu.tn/assets/images/logo.png" alt="enicarthage">
+    <p>Welcome to Gestion des absences</p>
+  </div>
+
   <div class="container">
-    <h1>Login User</h1>
+    <h1 class="titre">Login User</h1>
+    <div class="details">
     <form [formGroup]="loginForm" (ngSubmit)="login()" >
       <div class="mb-3">
         <label for="exampleInputEmail1">Email </label>
@@ -26,8 +34,16 @@
           Register here
         </a>
       </div>
+    </div>
+    <div id="login-message"></div>
   </div>
-</body>
+
+  </body>
+  <footer>
+    <div class="copyright">
+      <p>Copyright © Raouf</p>
+    </div>
+  </footer>
 </html>
 
 

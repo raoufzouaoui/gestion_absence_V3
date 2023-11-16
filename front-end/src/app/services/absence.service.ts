@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ADD_ABSENCE, ADD_ETUDIANT, DELETE_ETUDIANT, GET_ABSENCE_BY_ID, GET_ABSENCE_BY_ID_Etudiant, GET_ALL_ABSENCE, GET_MATIERE_BY_ID, GET_MATIERE_BY_NOM, UPDATE_ABSENCE, UPDATE_ETUDIANT } from '../shared/constants/urls';
+import { ADD_ABSENCE , GET_ABSENCE_BY_ID, GET_ABSENCE_BY_ID_Etudiant, GET_ALL_ABSENCE, GET_MATIERE_BY_ID, GET_MATIERE_BY_NOM, UPDATE_ABSENCE } from '../shared/constants/urls';
 import { Absence } from '../shared/models/Absence';
 import { Matiere } from '../shared/models/Matiere';
 

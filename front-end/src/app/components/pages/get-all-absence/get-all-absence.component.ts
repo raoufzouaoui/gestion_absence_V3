@@ -15,8 +15,8 @@ export class GetAllAbsenceComponent {
   constructor(private absenceService:AbsenceService,private etudiantService:EtudiantService,private userService:UserService){ }
 
   ngOnInit() {
-    const nom=this.userService.currentUser.nom;
-    const prenom=this.userService.currentUser.prenom;
+    const nom=this.userService.currentUser.firstname;
+    const prenom=this.userService.currentUser.lastname;
     this.absenceService.getAllAbsence().subscribe(data => {
       console.log(data);
       this.absences=data;
